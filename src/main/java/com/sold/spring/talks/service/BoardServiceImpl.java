@@ -1,5 +1,31 @@
 package com.sold.spring.talks.service;
 
-public class BoardServiceImpl {
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sold.spring.talks.dto.BoardDto;
+import com.sold.spring.talks.mapper.BoardMapper;
+import com.sold.spring.talks.util.PageUtil;
+
+import lombok.Setter;
+
+@Service
+public class BoardServiceImpl implements BoardService {
+	
+	@Setter(onMethod_ = @Autowired)
+	private BoardMapper boardMapper;
+	
+	@Override
+	public List<BoardDto> getBoardList(PageUtil pageUtil){
+		return boardMapper.getBoardList(pageUtil);
+	}
+	
+	@Override
+	public int totalPostsCount(PageUtil pageUtil) {
+		return boardMapper.totalPostsCount(pageUtil);
+	}
+
 
 }
