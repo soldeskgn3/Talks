@@ -2,11 +2,57 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<mapper namespace="com.sold.spring.talks.mapper.BoardMapper">
-		<select id="getBoardList" resultType="com.sold.spring.talks.dto.BoardDto">
-			SELECT * FROM posts ORDER BY posts_num DESC LIMIT #{startIndex}, #{pageAmount};
-		</select>
-		<select id="totalPostsCount" resultType="int" >
-			SELECT COUNT(*) FROM posts;
-		</select>
-	</mapper>
+<mapper namespace="com.sold.spring.talks.mapper.BoardMapper">
+	<!-- 글 목록 -->
+	<select id="getBoardList"
+		resultType="com.sold.spring.talks.dto.BoardDto">
+		SELECT * FROM posts
+		WHERE
+		<choose>
+			<when test="searchType == 'title'">
+				posts_title LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchType == 'content'">
+				posts_content LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchType == 'writer'">
+				posts_name LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchType == 'titlecon'">
+				posts_title LIKE CONCAT('%', #{searchWord}, '%') OR posts_content LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<otherwise>
+				1=1
+			</otherwise>
+		</choose>
+		ORDER BY posts_num DESC LIMIT #{startIndex}, #{pageAmount};
+	</select>
+	
+	<!-- 총 글수 -->
+	<select id="totalPostsCount" resultType="int">
+		SELECT COUNT(*) FROM posts
+		WHERE
+		<choose>
+			<when test="searchType == 'title'">
+				posts_title LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchType == 'content'">
+				posts_content LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchType == 'writer'">
+				posts_name LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchType == 'titlecon'">
+				posts_title LIKE CONCAT('%', #{searchWord}, '%') OR posts_content LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<otherwise>
+				1=1
+			</otherwise>
+		</choose>
+		;
+	</select>
+	
+	<select id="getRead" resultType="com.sold.spring.talks.dto.BoardDto">
+		SELECT * FROM posts WHERE posts_num = #{posts_num}
+	</select>
+</mapper>

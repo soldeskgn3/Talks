@@ -8,4 +8,5 @@ import com.sold.spring.talks.util.PageUtil;
 public interface BoardService {
 	public List<BoardDto>getBoardList(PageUtil pageUtil);
 	public int totalPostsCount(PageUtil pageUtil);
+	public BoardDto getRead(long posts_num);
 }

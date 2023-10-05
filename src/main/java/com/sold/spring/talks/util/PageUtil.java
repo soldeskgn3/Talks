@@ -4,10 +4,12 @@ import lombok.Data;
 
 @Data
 public class PageUtil {
-	private int pageNum;
-	private int pageAmount;
-	private int pageSize;
-	private int startIndex;
+	private int pageNum; //페이지 번호
+	private int pageAmount; //페이지당 글수
+	private int pageSize; //페이지 블록 사이즈
+	private int startIndex; // 페이지 시작점
+	private String searchType; //검색 타입
+	private String searchWord; //검색어
 	
 	public PageUtil() {
 		this.pageNum = 1;

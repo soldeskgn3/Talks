@@ -11,15 +11,17 @@ public class PagingUtil {
 	private int lastPage; //마지막 페이지
 	private boolean nextPage; //다음 페이지 버튼
 	private boolean prevPage; //이전 페이지 버튼
+	private String searchSet; //검색 정보
 	
 	public PagingUtil(int totalPostsCount,PageUtil pageUtil) {
 		if(totalPostsCount > 0) {
 			this.totalPostsCount = totalPostsCount;
-			Calculation(pageUtil);
+			calculation(pageUtil);
+			searchSet(pageUtil);
 		}
 	}
 	
-	public void Calculation(PageUtil pageUtil) {
+	public void calculation(PageUtil pageUtil) {
 		//전체 페이지 구하기
 		totalPageCount = ((totalPostsCount - 1) / pageUtil.getPageAmount()) + 1;
 		
@@ -40,4 +42,13 @@ public class PagingUtil {
 		nextPage = (lastPage * pageUtil.getPageAmount()) < totalPostsCount;
 	}
 	
+	public void searchSet(PageUtil pageUtil) {
+		
+	    if (pageUtil.getSearchType() == null || pageUtil.getSearchWord() == null ||
+	        pageUtil.getSearchType().isEmpty() || pageUtil.getSearchWord().isEmpty()) {
+	        searchSet = "";
+	    } else {
+	        searchSet = "&searchType=" + pageUtil.getSearchType() + "&searchWord=" + pageUtil.getSearchWord();
+	    }
+	}
 }

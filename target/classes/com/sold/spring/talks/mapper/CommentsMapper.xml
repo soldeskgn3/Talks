@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sold.spring.talks.mapper.CommentsMapper">
+	<select id="commentsList" resultType="com.sold.spring.talks.dto.CommentsDto">
+		SELECT*FROM comments WHERE posts_num = #{posts_num}
+	</select>
+</mapper>	

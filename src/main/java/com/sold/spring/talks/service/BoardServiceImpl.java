@@ -26,6 +26,10 @@ public class BoardServiceImpl implements BoardService {
 	public int totalPostsCount(PageUtil pageUtil) {
 		return boardMapper.totalPostsCount(pageUtil);
 	}
-
+	
+	@Override
+	public BoardDto getRead(long posts_num) {
+		return boardMapper.getRead(posts_num);
+	}
 
 }
