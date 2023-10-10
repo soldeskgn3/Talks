@@ -6,4 +6,18 @@
 	<select id="commentsList" resultType="com.sold.spring.talks.dto.CommentsDto">
 		SELECT*FROM comments WHERE posts_num = #{posts_num}
 	</select>
+	
+	<insert id="commentsInsert">
+		INSERT INTO comments (posts_num, comments_content, comments_name)
+		VALUES (#{posts_num}, #{comments_content}, #{comments_name})
+	</insert>
+	
+	<delete id="commentsDelete">
+		DELETE FROM comments WHERE posts_num = #{posts_num} 	
+	</delete>
+	
+	<update id="commentsUpdate">
+		UPDATE comments SET comments_content = #{comments_content}
+		WHERE posts_num = #{posts_num} 
+	</update>
 </mapper>	

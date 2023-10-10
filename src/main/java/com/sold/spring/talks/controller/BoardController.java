@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,7 +23,6 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/board/*")
 public class BoardController {
 	private BoardService boardService;
-	private CommentsService commentsService;
 	
 	@GetMapping("/getBoardList")
 	public String getBoardList(Model model, PageUtil pageUtil,
@@ -39,10 +39,9 @@ public class BoardController {
 		return ("getBoardList");
 	}
 	
-	@GetMapping("/read")
-	public String getRead(@RequestParam("posts_num") long posts_num, Model model) {
+	@GetMapping("/read/{posts_num}")
+	public String getRead(@PathVariable("posts_num") Long posts_num, Model model) {
 		model.addAttribute("read", boardService.getRead(posts_num));
-		model.addAttribute("commentsList", commentsService.commentsList(posts_num));
 		return ("read");
 	}
 }

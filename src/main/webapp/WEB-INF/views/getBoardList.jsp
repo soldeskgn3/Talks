@@ -97,7 +97,7 @@
             <c:forEach items="${pagingData.boardDtoList}" var="boardDto">
                 <tr>
                     <td>${boardDto.posts_num}</td>
-                    <td><a href="read?posts_num=${boardDto.posts_num}">${boardDto.posts_title}</a></td>
+                    <td><a href="read/${boardDto.posts_num}">${boardDto.posts_title}</a></td>
                     <td>${boardDto.posts_name}</td>
                     <td><fmt:formatDate pattern="MM-dd hh:mm" value="${boardDto.posts_date}"/></td>
                     <td>${boardDto.posts_hit}</td>

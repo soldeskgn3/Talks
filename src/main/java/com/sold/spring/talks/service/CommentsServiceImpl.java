@@ -17,8 +17,20 @@ public class CommentsServiceImpl implements CommentsService{
 	private CommentsMapper commentsMapper;
 	
 	@Override
-	public List<CommentsDto>commentsList(long posts_num){
+	public List<CommentsDto>commentsList(Long posts_num){
 		return commentsMapper.commentsList(posts_num);
+	}
+	
+	public int commentsInsert(CommentsDto commentsDto) {
+		return commentsMapper.commentsInsert(commentsDto);
+	}
+	
+	public int commentsDelete(Long posts_num) {
+		return commentsMapper.commentsDelete(posts_num);
+	}
+	
+	public int commentsUpdate(CommentsDto commentsDto) {
+		return commentsMapper.commentsUpdate(commentsDto);
 	}
 
 }

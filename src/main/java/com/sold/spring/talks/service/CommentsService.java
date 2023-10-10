@@ -5,6 +5,11 @@ import java.util.List;
 import com.sold.spring.talks.dto.CommentsDto;
 
 public interface CommentsService {
-	public List<CommentsDto>commentsList(long posts_num);
+	public List<CommentsDto>commentsList(Long posts_num);
 	
+	public int commentsInsert(CommentsDto commentsDto);
+	
+	public int commentsDelete(Long posts_num);
+	
+	public int commentsUpdate(CommentsDto commentsDto);
 }
