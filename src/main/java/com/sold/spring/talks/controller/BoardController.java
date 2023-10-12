@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sold.spring.talks.dto.BoardDto;
 import com.sold.spring.talks.service.BoardService;
-import com.sold.spring.talks.service.CommentsService;
 import com.sold.spring.talks.util.PageUtil;
 import com.sold.spring.talks.util.PagingUtil;
 import com.sold.spring.talks.util.PagingData;
