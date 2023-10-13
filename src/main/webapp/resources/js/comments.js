@@ -43,43 +43,34 @@ $(document).ready(function() {
             }
         });
     }
-});
-
-$("#commentButton").click(function() {
-
-    // 폼 데이터 수집
-    var writer = $("#writer").val();
-    var content = $("#content").val();
-    var postId = $("#postId").val();
-
-    // // 현재 시간을 가져와 포맷 변경
-    // var currentDate = new Date();
-    // var options = { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-    // var formattedDate = currentDate.toLocaleString('ko-KR', options);
-
-    // JSON 데이터 생성
-    var commentData = {
-        "comments_name": writer,
-        "comments_content": content,
-        "posts_num": postId,
-        // "datcomments_date": formattedDate
-    };
-
-    // JSON 데이터를 서버로 보냄 (예: AJAX 요청)
-    $.ajax({
-        type: "POST",
-        url: "/board/commentsInsert", // 댓글을 추가하는 서버 엔드포인트 URL
-        data: JSON.stringify(commentData),
-        contentType: "application/json; charset=utf-8",
-        success: function(response) {
-            // 서버 응답 처리 (성공 시)
-            console.log("댓글이 성공적으로 추가되었습니다.");
-            // 원하는 작업 수행
-        },
-        error: function() {
-            // 서버 응답 처리 (에러 발생 시)
-            console.error("댓글 추가 중에 오류가 발생했습니다.");
-            // 원하는 오류 처리 수행
-        }
+    
+    $("#commentButton").click(function () {
+        
+        var comments_name = $("#writer").val();
+        var comments_content = $("#content").val();
+        var posts_num = $("#postId").val();
+        
+        var commentData = {
+            "comments_name": comments_name,
+            "comments_content": comments_content,
+            "posts_num": posts_num,
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "/board/commentsInsert", 
+            data: JSON.stringify(commentData),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                console.log("댓글이 성공적으로 추가되었습니다.");
+                loadCommentsList(posts_num)
+                $("#writer").val(""); 
+                $("#content").val(""); 
+            },
+            error: function () {
+                console.error("댓글 추가 중에 오류가 발생했습니다.");
+            }
+        });
     });
 });
+    

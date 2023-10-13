@@ -46,7 +46,7 @@
 		<br>
 		<textarea id="content" name="content" placeholder="댓글 내용" rows="4" cols="50" required></textarea>
 		<br> 
-		<input type="hidden" id="postId" name="postId" value="${boardDto.posts_num}">
+		<input type="hidden" id="postId" name="postId" value="${read.posts_num}">
 		<button type="button" id="commentButton">댓글 작성</button>
 	</form>
 
