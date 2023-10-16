@@ -23,6 +23,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public List<BoardDto> getSoccerList(PageUtil pageUtil){
+		return boardMapper.getSoccerList(pageUtil);
+	}
+	
+	@Override
 	public int totalPostsCount(PageUtil pageUtil) {
 		return boardMapper.totalPostsCount(pageUtil);
 	}

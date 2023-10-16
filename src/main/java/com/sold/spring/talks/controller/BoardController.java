@@ -38,6 +38,27 @@ public class BoardController {
 		return ("getBoardList");
 	}
 	
+	@GetMapping("/{mainCategory}/{subCategory}")
+	public String getSoccerList(Model model, PageUtil pageUtil,
+	        @PathVariable String mainCategory,
+	        @PathVariable String subCategory,
+	        @RequestParam(name = "minorCategory", required = false) String minorCategory,
+			@RequestParam(name = "searchType", required = false) String searchType,
+			@RequestParam(name = "searchWord", required = false) String searchWord) {
+		pageUtil.setSearchType(searchType);
+		pageUtil.setSearchWord(searchWord);
+		pageUtil.setStartIndex((pageUtil.getPageNum() - 1) * pageUtil.getPageAmount());
+	    pageUtil.setPosts_main_category(mainCategory);
+	    pageUtil.setPosts_sub_category(subCategory);
+	    pageUtil.setPosts_minor_category(minorCategory);
+		List<BoardDto> boardDtoList = boardService.getSoccerList(pageUtil);
+		int totalPostsCount = boardService.totalPostsCount(pageUtil);
+		PagingUtil pagingUtil = new PagingUtil(totalPostsCount, pageUtil);
+		PagingData pagingData = new PagingData(boardDtoList, pagingUtil, pageUtil);
+		model.addAttribute("pagingData", pagingData);
+	    return "sports/soccer";
+	}
+	
 	@GetMapping("/read/{posts_num}")
 	public String getRead(@PathVariable("posts_num") Long posts_num, Model model) {
 		model.addAttribute("read", boardService.getRead(posts_num));

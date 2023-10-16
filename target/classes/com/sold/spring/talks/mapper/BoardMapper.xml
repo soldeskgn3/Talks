@@ -19,7 +19,8 @@
 				posts_name LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
 			<when test="searchType == 'titlecon'">
-				posts_title LIKE CONCAT('%', #{searchWord}, '%') OR posts_content LIKE CONCAT('%', #{searchWord}, '%')
+				posts_title LIKE CONCAT('%', #{searchWord}, '%') OR
+				posts_content LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
 			<otherwise>
 				1=1
@@ -27,7 +28,39 @@
 		</choose>
 		ORDER BY posts_num DESC LIMIT #{startIndex}, #{pageAmount};
 	</select>
-	
+
+	<select id="getSoccerList"
+		resultType="com.sold.spring.talks.dto.BoardDto">
+		SELECT * FROM posts
+		WHERE
+		<choose>
+			<when test="searchType == 'title'">
+				posts_title LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchType == 'content'">
+				posts_content LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchType == 'writer'">
+				posts_name LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchType == 'titlecon'">
+				posts_title LIKE CONCAT('%', #{searchWord}, '%') OR
+				posts_content LIKE
+				CONCAT('%', #{searchWord}, '%')
+			</when>
+			<otherwise>
+				1=1
+			</otherwise>
+		</choose>
+		AND posts_main_category = #{posts_main_category}
+		AND posts_sub_category = #{posts_sub_category}
+		<if test="posts_minor_category != null">
+			AND posts_minor_category = #{posts_minor_category}
+		</if>
+		ORDER BY posts_num DESC
+		LIMIT #{startIndex}, #{pageAmount};
+	</select>
+
 	<!-- 총 글수 -->
 	<select id="totalPostsCount" resultType="int">
 		SELECT COUNT(*) FROM posts
@@ -43,16 +76,23 @@
 				posts_name LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
 			<when test="searchType == 'titlecon'">
-				posts_title LIKE CONCAT('%', #{searchWord}, '%') OR posts_content LIKE CONCAT('%', #{searchWord}, '%')
+				posts_title LIKE CONCAT('%', #{searchWord}, '%') OR
+				posts_content LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
 			<otherwise>
 				1=1
 			</otherwise>
 		</choose>
+		AND posts_main_category = #{posts_main_category}
+		AND posts_sub_category = #{posts_sub_category}
+		<if test="posts_minor_category != null">
+			AND posts_minor_category = #{posts_minor_category}
+		</if>
 		;
 	</select>
-	
-	<select id="getRead" resultType="com.sold.spring.talks.dto.BoardDto">
+
+	<select id="getRead"
+		resultType="com.sold.spring.talks.dto.BoardDto">
 		SELECT * FROM posts WHERE posts_num = #{posts_num}
 	</select>
 </mapper>
