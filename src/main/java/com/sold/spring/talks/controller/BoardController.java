@@ -23,21 +23,6 @@ import lombok.AllArgsConstructor;
 public class BoardController {
 	private BoardService boardService;
 	
-	@GetMapping("/getBoardList")
-	public String getBoardList(Model model, PageUtil pageUtil,
-		      @RequestParam(name = "searchType", required = false) String searchType,
-		      @RequestParam(name = "searchWord", required = false) String searchWord) {
-	    pageUtil.setSearchType(searchType);
-	    pageUtil.setSearchWord(searchWord);
-        pageUtil.setStartIndex((pageUtil.getPageNum() - 1) * pageUtil.getPageAmount());
-		List<BoardDto> boardDtoList = boardService.getBoardList(pageUtil);
-		int totalPostsCount = boardService.totalPostsCount(pageUtil);
-		PagingUtil pagingUtil = new PagingUtil(totalPostsCount, pageUtil);
-		PagingData pagingData = new PagingData(boardDtoList, pagingUtil, pageUtil);
-		model.addAttribute("pagingData", pagingData);
-		return ("getBoardList");
-	}
-	
 	@GetMapping("/{mainCategory}/{subCategory}")
 	public String getSoccerList(Model model, PageUtil pageUtil,
 	        @PathVariable String mainCategory,
@@ -51,12 +36,13 @@ public class BoardController {
 	    pageUtil.setPosts_main_category(mainCategory);
 	    pageUtil.setPosts_sub_category(subCategory);
 	    pageUtil.setPosts_minor_category(minorCategory);
-		List<BoardDto> boardDtoList = boardService.getSoccerList(pageUtil);
+		List<BoardDto> boardDtoList = boardService.getPostsList(pageUtil);
 		int totalPostsCount = boardService.totalPostsCount(pageUtil);
 		PagingUtil pagingUtil = new PagingUtil(totalPostsCount, pageUtil);
 		PagingData pagingData = new PagingData(boardDtoList, pagingUtil, pageUtil);
 		model.addAttribute("pagingData", pagingData);
-	    return "sports/soccer";
+		String viewName = mainCategory + "/" + subCategory;
+	    return viewName;
 	}
 	
 	@GetMapping("/read/{posts_num}")

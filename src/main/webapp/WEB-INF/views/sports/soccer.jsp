@@ -97,7 +97,7 @@ th, td {
 			<c:forEach items="${pagingData.boardDtoList}" var="boardDto">
 				<tr>
 					<td>${boardDto.posts_num}</td>
-					<td><a href="read/${boardDto.posts_num}">${boardDto.posts_title}</a></td>
+					<td><a href="/board/read/${boardDto.posts_num}">${boardDto.posts_title}</a></td>
 					<td>${boardDto.posts_name}</td>
 					<td><fmt:formatDate pattern="MM-dd hh:mm"
 							value="${boardDto.posts_date}" /></td>
@@ -111,11 +111,26 @@ th, td {
 	<form>
 		<ul class="pagination">
 			<c:if test="${pagingData.pagingUtil.prevPage}">
-				<li><a
-					href="?pageNum=${pagingData.pagingUtil.firstPage}${pagingData.pagingUtil.searchSet}">첫
-						페이지</a></li>
-				<li><a
-					href="?pageNum=${pagingData.pagingUtil.firstPage - 1}${pagingData.pagingUtil.searchSet}">이전</a></li>
+				<li><c:choose>
+						<c:when test="${empty pagingData.pageUtil.posts_minor_category}">
+							<a
+								href="?pageNum=${pagingData.pagingUtil.firstPage}${pagingData.pagingUtil.searchSet}">첫 페이지</a>
+						</c:when>
+						<c:otherwise>
+							<a
+								href="?pageNum=${pagingData.pagingUtil.firstPage}${pagingData.pagingUtil.searchSet}&minorCategory=${pagingData.pageUtil.posts_minor_category}">첫 페이지</a>
+						</c:otherwise>
+					</c:choose></li>
+				<li><c:choose>
+						<c:when test="${empty pagingData.pageUtil.posts_minor_category}">
+							<a
+								href="?pageNum=${pagingData.pagingUtil.firstPage - 1}${pagingData.pagingUtil.searchSet}">이전</a>
+						</c:when>
+						<c:otherwise>
+							<a
+								href="?pageNum=${pagingData.pagingUtil.firstPage - 1}${pagingData.pagingUtil.searchSet}&minorCategory=${pagingData.pageUtil.posts_minor_category}">이전</a>
+						</c:otherwise>
+					</c:choose></li>
 			</c:if>
 
 			<c:forEach begin="${pagingData.pagingUtil.firstPage}"
@@ -125,26 +140,41 @@ th, td {
 						<li class="active">${pageNumber}</li>
 					</c:when>
 					<c:otherwise>
-						<c:choose>
-							<c:when test="${empty pagingData.pageUtil.posts_minor_category}">
-								<li><a
-									href="?pageNum=${pageNumber}${pagingData.pagingUtil.searchSet}">${pageNumber}</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a
-									href="?pageNum=${pageNumber}&minorCategory=${pagingData.pageUtil.posts_minor_category}${pagingData.pagingUtil.searchSet}">${pageNumber}</a></li>
-							</c:otherwise>
-						</c:choose>
+						<li><c:choose>
+								<c:when test="${empty pagingData.pageUtil.posts_minor_category}">
+									<a
+										href="?pageNum=${pageNumber}${pagingData.pagingUtil.searchSet}">${pageNumber}</a>
+								</c:when>
+								<c:otherwise>
+									<a
+										href="?pageNum=${pageNumber}${pagingData.pagingUtil.searchSet}&minorCategory=${pagingData.pageUtil.posts_minor_category}">${pageNumber}</a>
+								</c:otherwise>
+							</c:choose></li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 
 			<c:if test="${pagingData.pagingUtil.nextPage}">
-				<li><a
-					href="?pageNum=${pagingData.pagingUtil.lastPage + 1}${pagingData.pagingUtil.searchSet}">다음</a></li>
-				<li><a
-					href="?pageNum=${pagingData.pagingUtil.lastPage}${pagingData.pagingUtil.searchSet}">마지막
-						페이지</a></li>
+				<li><c:choose>
+						<c:when test="${empty pagingData.pageUtil.posts_minor_category}">
+							<a
+								href="?pageNum=${pagingData.pagingUtil.lastPage + 1}${pagingData.pagingUtil.searchSet}">다음</a>
+						</c:when>
+						<c:otherwise>
+							<a
+								href="?pageNum=${pagingData.pagingUtil.lastPage + 1}${pagingData.pagingUtil.searchSet}&minorCategory=${pagingData.pageUtil.posts_minor_category}">다음</a>
+						</c:otherwise>
+					</c:choose></li>
+				<li><c:choose>
+						<c:when test="${empty pagingData.pageUtil.posts_minor_category}">
+							<a
+								href="?pageNum=${pagingData.pagingUtil.lastPage}${pagingData.pagingUtil.searchSet}">마지막 페이지</a>
+						</c:when>
+						<c:otherwise>
+							<a
+								href="?pageNum=${pagingData.pagingUtil.lastPage}${pagingData.pagingUtil.searchSet}&minorCategory=${pagingData.pageUtil.posts_minor_category}">마지막 페이지</a>
+						</c:otherwise>
+					</c:choose></li>
 			</c:if>
 		</ul>
 	</form>
@@ -161,9 +191,12 @@ th, td {
 					<c:if test="${pagingData.pageUtil.searchType eq 'writer'}">selected</c:if>>작성자</option>
 				<option value="title_content"
 					<c:if test="${pagingData.pageUtil.searchType eq 'title_content'}">selected</c:if>>제목+내용</option>
-			</select> <input type="text" name="searchWord"
-				value="${pagingData.pageUtil.searchWord}"> <input
-				type="submit" value="검색">
+			</select> 
+			<input type="text" name="searchWord" value="${pagingData.pageUtil.searchWord}"> 
+       		<c:if test="${not empty pagingData.pageUtil.posts_minor_category}">
+            	<input type="hidden" name="minorCategory" value="${pagingData.pageUtil.posts_minor_category}">
+        	</c:if>
+			<input type="submit" value="검색">
 		</div>
 	</form>
 </body>

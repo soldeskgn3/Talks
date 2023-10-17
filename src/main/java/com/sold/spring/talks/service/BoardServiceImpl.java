@@ -18,13 +18,8 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper boardMapper;
 	
 	@Override
-	public List<BoardDto> getBoardList(PageUtil pageUtil){
-		return boardMapper.getBoardList(pageUtil);
-	}
-	
-	@Override
-	public List<BoardDto> getSoccerList(PageUtil pageUtil){
-		return boardMapper.getSoccerList(pageUtil);
+	public List<BoardDto> getPostsList(PageUtil pageUtil){
+		return boardMapper.getPostsList(pageUtil);
 	}
 	
 	@Override
