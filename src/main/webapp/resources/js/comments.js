@@ -32,8 +32,26 @@ $(document).ready(function() {
                         var formattedDate = commentsFormatDate.toLocaleString('ko-KR', options);
 
                         var commentsDate = $("<p>").text("작성일: " + formattedDate).addClass("commentsDate");
-                    
-                        listItem.append(commentsName, commentsDate, commentsContent);
+                        
+                        var replyButton = $("<button>").text("댓글쓰기").addClass("comment-button");
+                        var editButton = $("<button>").text("수정").addClass("comment-button");
+                        var deleteButton = $("<button>").text("삭제").addClass("comment-button");
+
+                        replyButton.on("click", function() {
+                            var replyForm = $("<div>").addClass("reply-form");
+                            var nameInput = $("<input>").attr("type", "text").attr("placeholder", "이름");
+                            var contentInput = $("<textarea>").attr("placeholder", "내용");
+                            var saveButton = $("<button>").text("저장");
+                            var cancelButton = $("<button>").text("취소");
+                        });
+
+                        editButton.on("click", function() {
+                        });
+
+                        deleteButton.on("click", function() {
+                        });
+
+                        listItem.append(commentsName, commentsDate, commentsContent, replyButton, editButton, deleteButton);
                         commentsList.append(listItem);
                     });
                 }

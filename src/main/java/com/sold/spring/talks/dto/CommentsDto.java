@@ -11,4 +11,7 @@ public class CommentsDto {
 	private String comments_content;
 	private String comments_name;
 	private Timestamp comments_date;
+	private int comments_parents_num;
+	private int comment_level;
+	private boolean comments_deleted;
 }

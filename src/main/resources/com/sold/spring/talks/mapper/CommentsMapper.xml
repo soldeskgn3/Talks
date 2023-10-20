@@ -3,21 +3,66 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sold.spring.talks.mapper.CommentsMapper">
-	<select id="commentsList" resultType="com.sold.spring.talks.dto.CommentsDto">
-		SELECT*FROM comments WHERE posts_num = #{posts_num}
+	<select id="commentsList"
+		resultType="com.sold.spring.talks.dto.CommentsDto">
+		WITH RECURSIVE CommentCTE AS (
+			SELECT
+				comments_num,
+				posts_num,
+				comments_content,
+				comments_name,
+				comments_date,
+				comments_parents_num,
+				0 AS comment_level
+			FROM
+				comments
+			WHERE
+				posts_num = #{posts_num} AND comments_parents_num IS NULL
+		UNION ALL
+			SELECT
+				c.comments_num,
+				c.posts_num,
+				c.comments_content,
+				c.comments_name,
+				c.comments_date,
+				c.comments_parents_num,
+				p.comment_level + 1
+			FROM
+				CommentCTE AS p
+			JOIN
+				comments AS c ON p.comments_num = c.comments_parents_num
+		)
+		SELECT
+			comments_num,
+			posts_num,
+			comments_content,
+			comments_name,
+			comments_date,
+			comments_parents_num,
+			comment_level
+		FROM
+			CommentCTE
+		ORDER BY
+    		CASE
+       	 		WHEN comment_level = 0 THEN comments_num
+        		ELSE comments_parents_num
+    			END, comment_level, comments_num;
 	</select>
-	
+
 	<insert id="commentsInsert">
-		INSERT INTO comments (posts_num, comments_content, comments_name)
-		VALUES (#{posts_num}, #{comments_content}, #{comments_name})
+		INSERT INTO comments (posts_num, comments_content,
+		comments_name)
+		VALUES (#{posts_num}, #{comments_content},
+		#{comments_name})
 	</insert>
-	
+
 	<delete id="commentsDelete">
-		DELETE FROM comments WHERE posts_num = #{posts_num} 	
+		DELETE FROM comments WHERE posts_num = #{posts_num}
 	</delete>
-	
+
 	<update id="commentsUpdate">
-		UPDATE comments SET comments_content = #{comments_content}
-		WHERE posts_num = #{posts_num} 
+		UPDATE comments SET comments_content =
+		#{comments_content}
+		WHERE posts_num = #{posts_num}
 	</update>
 </mapper>	
