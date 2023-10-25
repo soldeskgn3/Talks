@@ -8,5 +8,8 @@ import com.sold.spring.talks.util.PageUtil;
 public interface BoardMapper {
 	public List<BoardDto>getPostsList(PageUtil pageUtil);
 	public int totalPostsCount(PageUtil pageUtil);
-	public BoardDto getRead(long posts_num);
+	public BoardDto getRead(Long posts_num);
+	public void createPost(BoardDto boardDto);
+	public void deletePost(Long posts_num);
+	public void modifyPost(BoardDto boardDto);
 }

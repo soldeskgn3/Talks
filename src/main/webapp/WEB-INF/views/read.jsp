@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="/resources/js/comments.js"></script>
+<script type="text/javascript" src="/resources/js/comments.js?ver=1"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -50,5 +50,33 @@
 		<button type="button" id="commentButton">댓글 작성</button>
 	</form>
 
+	<form action="/board/deletePost" id="deletePostButton" method="post">
+		<input type="hidden" name="posts_num" value="${read.posts_num}">
+		<input type="hidden" name="mainCategory" value="${mainCategory}">
+		<input type="hidden" name="subCategory" value="${subCategory}">
+		<c:choose>
+			<c:when test="${not empty param.minorCategory}">
+				<input type="hidden" name="minorCategory"
+					value="${param.minorCategory}">
+			</c:when>
+		</c:choose>
+		<button type="submit">글 삭제</button>
+	</form>
+
+	<c:choose>
+	    <c:when test="${not empty mainCategory && not empty subCategory}">
+	        <c:choose>
+	            <c:when test="${not empty param.minorCategory}">
+	                <a href="/board/${mainCategory}/${subCategory}/modifyPost/${read.posts_num}?minorCategory=${param.minorCategory}">글 수정</a>
+	            </c:when>
+	            <c:otherwise>
+	                <a href="/board/${mainCategory}/${subCategory}/modifyPost">글 수정</a>
+	            </c:otherwise>
+	        </c:choose>
+	    </c:when>
+	    <c:otherwise>
+	        <a href="/board/modifyPost" class="modifyButton">글 수정</a>
+	    </c:otherwise>
+	</c:choose>
 </body>
 </html>

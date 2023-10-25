@@ -1,18 +1,19 @@
 $(document).ready(function() {
-    var currentURL = window.location.pathname;
-    var match = currentURL.match(/\/board\/read\/(\d+)/);
-    // 정규표현식 에서 글번호 추출하기
-    
+    var currentURL = window.location.pathname + window.location.search;
+    var match = currentURL.match(/\/([^/]+)\/([^/]+)\/read\/(\d+)\?minorCategory=([^&]+)/);
     if (match) {
-        var posts_num = match[1];
+        var mainCategory = match[1];
+        var subCategory = match[2];
+        var posts_num = match[3];
+        var minorCategory = match[4];
 
-        loadCommentsList(posts_num);
+        loadCommentsList(mainCategory, subCategory, posts_num, minorCategory);
     }
     
-    function loadCommentsList(posts_num) {
+    function loadCommentsList(mainCategory, subCategory, posts_num, minorCategory) {
         $.ajax({
             type: "GET",
-            url: "/board/read/" + posts_num,
+            url: "/board/" + mainCategory + "/" + subCategory + "/read/" + posts_num + "?minorCategory=" + minorCategory,
             dataType: "json",
             success: function(data) {
                 var commentsList = $("#commentsList");
@@ -38,11 +39,6 @@ $(document).ready(function() {
                         var deleteButton = $("<button>").text("삭제").addClass("comment-button");
 
                         replyButton.on("click", function() {
-                            var replyForm = $("<div>").addClass("reply-form");
-                            var nameInput = $("<input>").attr("type", "text").attr("placeholder", "이름");
-                            var contentInput = $("<textarea>").attr("placeholder", "내용");
-                            var saveButton = $("<button>").text("저장");
-                            var cancelButton = $("<button>").text("취소");
                         });
 
                         editButton.on("click", function() {
@@ -56,7 +52,8 @@ $(document).ready(function() {
                     });
                 }
             },
-            error: function() {
+            error: function(xhr, status, error) {
+                console.error("오류 발생:", status, error);
                 alert("댓글을 불러오는데 실패했습니다.");
             }
         });
@@ -67,6 +64,8 @@ $(document).ready(function() {
         var comments_name = $("#writer").val();
         var comments_content = $("#content").val();
         var posts_num = $("#postId").val();
+
+        console.log("posts_num in click event: " + posts_num);
         
         var commentData = {
             "comments_name": comments_name,
@@ -81,7 +80,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 console.log("댓글이 성공적으로 추가되었습니다.");
-                loadCommentsList(posts_num)
+                loadCommentsList(mainCategory, subCategory, posts_num, minorCategory)
                 $("#writer").val(""); 
                 $("#content").val(""); 
             },

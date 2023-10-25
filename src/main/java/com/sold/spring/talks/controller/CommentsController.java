@@ -24,7 +24,7 @@ public class CommentsController {
 	
 	private CommentsService commentsService;
 	
-	@GetMapping(value = "/read/{posts_num}", produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value = "/{mainCategory}/{subCategory}/read/{posts_num}", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<CommentsDto>>getCommentsList(@PathVariable("posts_num") Long posts_num){
 		return new ResponseEntity<>(commentsService.commentsList(posts_num), HttpStatus.OK);
 	}

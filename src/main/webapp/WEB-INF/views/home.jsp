@@ -15,6 +15,11 @@
 	<a href="http://localhost:8080/board/sports/soccer?minorCategory=laliga">라리가</a>
 	<a href="http://localhost:8080/board/sports/soccer?minorCategory=bundesliga">분데스리가</a>
 	<a href="http://localhost:8080/board/sports/soccer?minorCategory=seriea">세리에A</a>
+	
+	<a href="http://localhost:8080/member/signupForm">회원가입</a>
+	<a href="http://localhost:8080/member/loginForm">로그인</a>
+	
+	
 
 </body>
 </html>

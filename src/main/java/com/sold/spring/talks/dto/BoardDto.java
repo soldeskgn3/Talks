@@ -14,8 +14,6 @@ public class BoardDto {
 	private String posts_title;
 	private String posts_content;
 	private Timestamp posts_date;
-	private int posts_hit;
-	private int posts_good;
 	private String posts_name;
 	private String posts_main_category;
 	private String posts_sub_category;

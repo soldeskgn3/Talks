@@ -28,8 +28,22 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public BoardDto getRead(long posts_num) {
+	public BoardDto getRead(Long posts_num) {
 		return boardMapper.getRead(posts_num);
 	}
+	
+	@Override
+	public void createPost(BoardDto boardDto) {
+		boardMapper.createPost(boardDto);
+	}
+	
+	@Override
+	public void deletePost(Long posts_num) {
+		boardMapper.deletePost(posts_num);
+	}
 
+	@Override
+	public void modifyPost(BoardDto boardDto) {
+		boardMapper.modifyPost(boardDto);
+	}
 }

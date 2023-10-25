@@ -69,4 +69,17 @@
 		resultType="com.sold.spring.talks.dto.BoardDto">
 		SELECT * FROM posts WHERE posts_num = #{posts_num}
 	</select>
+	
+	<insert id="createPost">
+		INSERT INTO posts (posts_title, posts_content, posts_name, posts_main_category, posts_sub_category, posts_minor_category)
+		VALUES (#{posts_title}, #{posts_content}, #{posts_name}, #{posts_main_category}, #{posts_sub_category}, #{posts_minor_category});
+	</insert>
+	
+	<delete id="deletePost">
+		DELETE FROM posts WHERE posts_num = #{posts_num};
+	</delete>
+	
+	<update id="modifyPost">
+		UPDATE posts SET posts_title = #{posts_title}, posts_content = #{posts_content} WHERE posts_num = #{posts_num};
+	</update>
 </mapper>

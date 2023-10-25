@@ -80,6 +80,13 @@ th, td {
 </style>
 </head>
 <body>
+
+	<script>
+		var mainCategory = "${pagingData.pageUtil.posts_main_category}";
+		var subCategory = "${pagingData.pageUtil.posts_sub_category}";
+		var minorCategory = "${pagingData.pageUtil.posts_minor_category}";
+	</script>
+	
 	<h1>축구 게시판</h1>
 
 	<!-- 글 목록 -->
@@ -90,18 +97,33 @@ th, td {
 				<th>제목</th>
 				<th>작성자</th>
 				<th>작성날짜</th>
-				<th>조회수</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${pagingData.boardDtoList}" var="boardDto">
 				<tr>
 					<td>${boardDto.posts_num}</td>
-					<td><a href="/board/read/${boardDto.posts_num}">${boardDto.posts_title}</a></td>
+			        <td>
+			            <c:choose>
+			                <c:when test="${not empty pagingData.pageUtil.posts_main_category && not empty pagingData.pageUtil.posts_sub_category}">
+			                    <c:choose>
+			                        <c:when test="${not empty pagingData.pageUtil.posts_minor_category}">
+			                            <c:set var="readLink" value="/board/${pagingData.pageUtil.posts_main_category}/${pagingData.pageUtil.posts_sub_category}/read/${boardDto.posts_num}?minorCategory=${pagingData.pageUtil.posts_minor_category}"/>
+			                        </c:when>
+			                        <c:otherwise>
+			                            <c:set var="readLink" value="/board/${pagingData.pageUtil.posts_main_category}/${pagingData.pageUtil.posts_sub_category}/read/${boardDto.posts_num}"/>
+			                        </c:otherwise>
+			                    </c:choose>
+			                </c:when>
+			                <c:otherwise>
+			                    <c:set var="readLink" value="/board/read/${boardDto.posts_num}"/>
+			                </c:otherwise>
+			            </c:choose>
+			            <a href="${readLink}">${boardDto.posts_title}</a>
+			        </td>
 					<td>${boardDto.posts_name}</td>
 					<td><fmt:formatDate pattern="MM-dd hh:mm"
 							value="${boardDto.posts_date}" /></td>
-					<td>${boardDto.posts_hit}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -199,5 +221,22 @@ th, td {
 			<input type="submit" value="검색">
 		</div>
 	</form>
+	
+	<!-- 글쓰기 -->
+	<c:choose>
+	    <c:when test="${not empty pagingData.pageUtil.posts_main_category && not empty pagingData.pageUtil.posts_sub_category}">
+	        <c:choose>
+	            <c:when test="${not empty pagingData.pageUtil.posts_minor_category}">
+	                <a href="/board/${pagingData.pageUtil.posts_main_category}/${pagingData.pageUtil.posts_sub_category}/write?minorCategory=${pagingData.pageUtil.posts_minor_category}">글 작성</a>
+	            </c:when>
+	            <c:otherwise>
+	                <a href="/board/${pagingData.pageUtil.posts_main_category}/${pagingData.pageUtil.posts_sub_category}/write">글 작성</a>
+	            </c:otherwise>
+	        </c:choose>
+	    </c:when>
+	    <c:otherwise>
+	        <a href="/board/write" class="writeButton">글 작성</a>
+	    </c:otherwise>
+	</c:choose>
 </body>
 </html>
