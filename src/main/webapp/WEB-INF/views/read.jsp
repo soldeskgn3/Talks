@@ -24,7 +24,7 @@
 		</tr>
 		<tr>
 			<td>작성자:</td>
-			<td>${read.posts_name}</td>
+			<td>${read.member_nickname}</td>
 		</tr>
 		<tr>
 			<td>작성날짜:</td>

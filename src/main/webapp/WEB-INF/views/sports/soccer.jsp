@@ -121,7 +121,7 @@ th, td {
 			            </c:choose>
 			            <a href="${readLink}">${boardDto.posts_title}</a>
 			        </td>
-					<td>${boardDto.posts_name}</td>
+					<td>${boardDto.member_nickname}</td>
 					<td><fmt:formatDate pattern="MM-dd hh:mm"
 							value="${boardDto.posts_date}" /></td>
 				</tr>

@@ -10,7 +10,7 @@
 				comments_num,
 				posts_num,
 				comments_content,
-				comments_name,
+				member_nickname,
 				comments_date,
 				comments_parents_num,
 				0 AS comment_level
@@ -23,7 +23,7 @@
 				c.comments_num,
 				c.posts_num,
 				c.comments_content,
-				c.comments_name,
+				c.member_nickname,
 				c.comments_date,
 				c.comments_parents_num,
 				p.comment_level + 1
@@ -36,7 +36,7 @@
 			comments_num,
 			posts_num,
 			comments_content,
-			comments_name,
+			member_nickname,
 			comments_date,
 			comments_parents_num,
 			comment_level
@@ -51,9 +51,9 @@
 
 	<insert id="commentsInsert">
 		INSERT INTO comments (posts_num, comments_content,
-		comments_name)
+		member_nickname)
 		VALUES (#{posts_num}, #{comments_content},
-		#{comments_name})
+		#{member_nickname})
 	</insert>
 
 	<delete id="commentsDelete">

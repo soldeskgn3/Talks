@@ -11,7 +11,7 @@
 <form action="/board/create" method="post" >
     <input type="text" name="posts_title" placeholder="제목" required maxlength="40"><br>
     <textarea name="posts_content" placeholder="내용" required maxlength="300"></textarea><br>
-    <input type="text" name="posts_name" placeholder="작성자" required maxlength="30"><br>
+    <input type="text" name="member_nickname" placeholder="작성자" required maxlength="30"><br>
     <input type="hidden" name="mainCategory" value="${mainCategory}">
     <input type="hidden" name="subCategory" value="${subCategory}">
     <c:choose>

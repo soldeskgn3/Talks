@@ -24,7 +24,7 @@ $(document).ready(function() {
                 } else {
                     data.forEach(function(comments) {
                         var listItem = $("<li>");
-                        var commentsName = $("<p>").text("작성자: " + comments.comments_name).addClass("commentsName");
+                        var member_nickname = $("<p>").text("작성자: " + comments.member_nickname).addClass("member_nickname");
                         var commentsContent = $("<p>").text(comments.comments_content).addClass("commentsContent");
 
                         var commentsFormatDate = new Date(comments.comments_date);
@@ -47,7 +47,7 @@ $(document).ready(function() {
                         deleteButton.on("click", function() {
                         });
 
-                        listItem.append(commentsName, commentsDate, commentsContent, replyButton, editButton, deleteButton);
+                        listItem.append(member_nickname, commentsDate, commentsContent, replyButton, editButton, deleteButton);
                         commentsList.append(listItem);
                     });
                 }
@@ -61,14 +61,14 @@ $(document).ready(function() {
     
     $("#commentButton").click(function () {
         
-        var comments_name = $("#writer").val();
+        var member_nickname = $("#writer").val();
         var comments_content = $("#content").val();
         var posts_num = $("#postId").val();
 
         console.log("posts_num in click event: " + posts_num);
         
         var commentData = {
-            "comments_name": comments_name,
+            "member_nickname": member_nickname,
             "comments_content": comments_content,
             "posts_num": posts_num,
         };

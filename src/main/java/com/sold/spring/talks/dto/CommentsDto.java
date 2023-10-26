@@ -9,7 +9,7 @@ public class CommentsDto {
 	private int comments_num;
 	private int posts_num;
 	private String comments_content;
-	private String comments_name;
+	private String member_nickname;
 	private Timestamp comments_date;
 	private int comments_parents_num;
 	private int comment_level;

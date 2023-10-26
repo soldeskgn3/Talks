@@ -16,12 +16,11 @@
 				posts_content LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
 			<when test="searchType == 'writer'">
-				posts_name LIKE CONCAT('%', #{searchWord}, '%')
+				member_nickname LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
-			<when test="searchType == 'titlecon'">
+			<when test="searchType == 'title_content'">
 				posts_title LIKE CONCAT('%', #{searchWord}, '%') OR
-				posts_content LIKE
-				CONCAT('%', #{searchWord}, '%')
+				posts_content LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
 			<otherwise>
 				1=1
@@ -47,9 +46,9 @@
 				posts_content LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
 			<when test="searchType == 'writer'">
-				posts_name LIKE CONCAT('%', #{searchWord}, '%')
+				member_nickname LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
-			<when test="searchType == 'titlecon'">
+			<when test="searchType == 'title_content'">
 				posts_title LIKE CONCAT('%', #{searchWord}, '%') OR
 				posts_content LIKE CONCAT('%', #{searchWord}, '%')
 			</when>
@@ -71,8 +70,8 @@
 	</select>
 	
 	<insert id="createPost">
-		INSERT INTO posts (posts_title, posts_content, posts_name, posts_main_category, posts_sub_category, posts_minor_category)
-		VALUES (#{posts_title}, #{posts_content}, #{posts_name}, #{posts_main_category}, #{posts_sub_category}, #{posts_minor_category});
+		INSERT INTO posts (posts_title, posts_content, member_nickname, posts_main_category, posts_sub_category, posts_minor_category)
+		VALUES (#{posts_title}, #{posts_content}, #{member_nickname}, #{posts_main_category}, #{posts_sub_category}, #{posts_minor_category});
 	</insert>
 	
 	<delete id="deletePost">
